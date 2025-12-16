@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:fsplugin/entities/usuario.dart';
 import 'package:fsplugin/usuario_provider.dart';
@@ -20,12 +22,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     Usuario? usuario = context.watch<UsuarioProvider>().usuario;
-    print('nombre: ${usuario?.nombre}');
+    print('usuario: $usuario');
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(usuario?.nombre ?? 'Cargando...'),
+        // Nombre de Usuario aqui >>
+        title: Text(usuario?.nombre ?? 'Nombre?'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),

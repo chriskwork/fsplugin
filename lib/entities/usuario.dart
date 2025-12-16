@@ -3,6 +3,6 @@ class Usuario {
   String tiempoRestante = "";
 
   Usuario.fromJson(Map datos)
-    : nombre = datos['nombre'],
-      tiempoRestante = datos['saldohoras'];
+    : nombre = datos['nombre'] ?? "",
+      tiempoRestante = datos['saldohoras']?.toString() ?? "";
 }

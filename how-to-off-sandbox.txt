@@ -1,0 +1,9 @@
+프로젝트 폴더 안에 macos->runner 안에 debug뭐시기 파일과 release뭐시기 파일이 있는데 거기에서 
+app-sandbox 부분을 true -> false로 변경
+
+XCODE 빌드에서 Runner -> target 파트의 runner 에서
+build setting 에서 sandbox 검색.
+접힌거 열고 모든 항목 NO로 바꾸기
+
+샌드박스 때문에 facturascripts api를 받아올 수 없었음.
+(권한 미부여로 계속 블럭해버림)
