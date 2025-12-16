@@ -25,8 +25,47 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleLogin() async {
+    setState(() => _isLoading = true);
+
+    final provider = context.read<UsuarioProvider>();
+    final success = await provider.login(
+      _usernameController.text,
+      _passwordController.text,
+    );
+
+    setState(() => _isLoading = false);
+
+    if (success && mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen()),
+      );
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Usuario o contraseña incorrectos')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +77,22 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 TextFormField(
+                  controller: _usernameController,
                   decoration: InputDecoration(labelText: 'Nombre de Usuario'),
                 ),
                 TextFormField(
+                  controller: _passwordController,
                   decoration: InputDecoration(labelText: 'Contraseña'),
+                  obscureText: true,
                 ),
 
                 SizedBox(height: 20),
-
-                FilledButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainScreen()),
-                    );
-                  },
-                  child: Text("Enterar"),
-                ),
+                _isLoading
+                    ? CircularProgressIndicator()
+                    : FilledButton(
+                        onPressed: _handleLogin,
+                        child: Text("Entrar"),
+                      ),
               ],
             ),
           ),

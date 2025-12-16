@@ -22,13 +22,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     Usuario? usuario = context.watch<UsuarioProvider>().usuario;
-    print('usuario: $usuario');
+    print('usuario: ${usuario!.nombre}');
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         // Nombre de Usuario aqui >>
-        title: Text(usuario?.nombre ?? 'Nombre?'),
+        title: Text(usuario.nombre),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
